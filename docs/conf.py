@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# helloWorld documentation build configuration file, created by
+# RTI Gen3 Deployment documentation build configuration file, created by
 # sphinx-quickstart on Mon May 24 17:05:55 2021.
 #
 # This file is execfile()d with the current directory set to its
@@ -49,7 +49,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'helloWorld'
+project = 'RTI Gen3 Deployment'
 copyright = '2021, John Cheadle'
 author = 'John Cheadle'
 
@@ -58,7 +58,7 @@ author = 'John Cheadle'
 # built documents.
 #
 # The short X.Y version.
-version = '1.0.0'
+version = '1.0'
 # The full version, including alpha/beta/rc tags.
 release = '1.0.0'
 
@@ -116,7 +116,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'helloWorlddoc'
+htmlhelp_basename = 'RTI_Gen3_Deployment_doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -143,7 +143,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'helloWorld.tex', 'helloWorld Documentation',
+    (master_doc, 'RTI Gen3 Deployment.tex', 'RTI Gen3 Deployment Documentation',
      'John Cheadle', 'manual'),
 ]
 
@@ -153,7 +153,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'helloworld', 'helloWorld Documentation',
+    (master_doc, 'RTI Gen3 Deployment', 'RTI Gen3 Deployment Documentation',
      [author], 1)
 ]
 
@@ -164,8 +164,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'helloWorld', 'helloWorld Documentation',
-     author, 'helloWorld', 'One line description of project.',
+    (master_doc, 'RTI Gen3 Deployment', 'RTI Gen3 Deployment Documentation',
+     author, 'RTI Gen3 Deployment', 'One line description of project.',
      'Miscellaneous'),
 ]
 
