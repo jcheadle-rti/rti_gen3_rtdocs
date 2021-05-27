@@ -15,6 +15,7 @@ Welcome to RTI Gen3 Deployment's documentation!
    compose_services_standup
    compose_services_working
    users
+   customizing
    data_dictionary
    data_analysis
    glossary
