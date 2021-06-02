@@ -375,52 +375,148 @@ Data Portal
 ***********
 
 You may need to bring the docker-compose stack down and up again to see the changes 
-in the data portal. (Does Kibana work in Windmill??)
+in the data portal.  Afer the restart, log in and see that the data commons 
+landing page dashboard now has a populated chart.
 
+.. image:: images/compose_services_working/data_commons_front_page.png
+   :width: 700
+   :alt: picture of the Gen3 landing page with dashboard populated.
+
+You can also see data at, for instance, https://localhost/Program1-P1/search?node_type=sample, 
+which shows the metadata recently uploaded to the sample node.
 
 PostgreSQL Database
 *******************
 
-Per the compose-services model here, data gets passed to the Postgres database 
-for persistence.  We can verify metadata is in the PostgreSQL container by first 
-clicking on CLI for the postgres container in Docker Compose, then entering the 
-following commands:
+Per the compose-services model `here <https://github.com/uc-cdis/compose-services/blob/master/SandboxContainers.jpg>`__, 
+data gets passed to the Postgres database for persistence.  We can verify metadata 
+is in the PostgreSQL container by first clicking on CLI for the postgres container 
+in Docker Compose, then entering the following commands:
 
 .. image:: images/compose_services_working/postgres_container_cli.png
    :width: 700
    :alt: screengrab of postgres container CLI in Docker Compose.
 
-code block here
+.. code-block:: sh
 
-images here
+   su postgres # this changes to the postgres user
+   psql # this starts psql
+   \l # this lists databases
+   \c metadata_db # this connects to the e.g. metadata_db database
+   SELECT * FROM node_acknowledgement # This brings back data from the node_acknowledgement table
 
+Using those commands, you shoudl see data under the :code:`node_id` column.  In 
+particular, you should see the program/project you created listed as the value 
+for the :code:`project_id` key.
+
+.. image:: images/compose_services_working/acknowledgement_node.png
+   :width: 700
+   :alt: postgresql results in acknowledgement node
 
 Reconfigure Kibana and Guppy
 ++++++++++++++++++++++++++++
 
+Now that we have created a program, a project, generated test metadata, and 
+uploaded simulated test metadata via the Data Portal UI, we can reconfigure 
+Kibana and Guppy.
+
 Reconfigure Kibana
 ------------------
+
+Uncomment the kibana-service from the docker-compose.yaml file.  It should look 
+like the image below.
+
+.. image:: images/compose_services_working/kibana_docker_compose.png
+   :width: 500
+   :alt: uncomment kibana section in docker-compose
 
 Reconfigure Guppy
 -----------------
 
+Reconfigure Guppy to show the exploration page facets and allow for GraphQL queries 
+on the Query page.  This sub-section follows the instructions on 
+`this <https://github.com/uc-cdis/compose-services#configuring-guppy-for-exploration-page>`__ page.
+
+First, re-enable nginx.conf by removing the comments from the guppy section.
+
+.. image:: images/compose_services_working/nginx_conf_guppy.png
+   :width: 500
+   :alt: uncomment guppy section in nginx.conf
+
 Troubleshooting Spark Service
 *****************************
+
+.. image:: images/compose_services_working/spark_255.png
+   :width: 600
+   :alt: spark service occasionally exits with a code 255
+
+Ignore this section if your spark service is active (green).
+
+Upon initial start up of the docker-compose stack, the spark service may exit with 
+code 255.  The compose-services repo mentions this issue in the 
+`spark-service-hdfs-reformatting-issue section <https://github.com/uc-cdis/compose-services#spark-service-hdfs-reformatting-issue>`__.  
+Essentially, the solution is to remove the spark-service container and then bring the stack up again.
+
+.. code-block:: sh
+
+   docker rm spark-service
+   docker-compose up -d
 
 Install Dependencies
 ********************
 
-Verify Guppy Queries Work
--------------------------
+Once the spark-service container is active (green), install the necessary dependencies 
+for the tube-service container and run the guppy setup from the repo root:
+
+.. code-block:: sh
+
+   docker exec -it tube-service bash -c "cd /tmp/datadictionary && pip install ."
+   bash ./guppy_setup.sh
+
+This should take a few minutes to run.
+
+Exploration Page
+****************
+
+Once complete, navigate to the Exploration page, and see that it is now populated 
+with metadata.
+
+.. image:: images/compose_services_working/explorer.png
+   :width: 700
+   :alt: explorer page populated with metadata
+
+Verify Queries Work
+-------------------
+
+Queries are possible against two different data models - the graph model and the 
+flat model.  The graph model can be seen at https://localhost/DD, whereas the flat 
+model is the ETL'd version of the graph model to Elasticsearch for quick retrieval.
 
 Graph Model
 ***********
 
+All nodes of the graph model can be queried.  See an example below.
+
+.. image:: images/compose_services_working/query_graph.png
+   :width: 600
+   :alt: example query against the graph model
+
 Flat Model
 **********
 
-Additional Information
-**********************
+In this data commons only :code:`case` and :code:`file` metadata may be queried. 
+In addition, one can perform aggregations over these nodes.  This is outside of the 
+scope of this guide.  See an example below.
+
+.. image:: images/compose_services_working/query_flat.png
+   :width: 600
+   :alt: example query against the flat model
+
+Additional Query Information
+****************************
+
+More information on queries can be found on the GitHub repo for Guppy, specifically 
+the Guppy Query Syntax page (https://github.com/uc-cdis/guppy/blob/master/doc/queries.md)
 
 Closing Thoughts
 ++++++++++++++++
