@@ -315,6 +315,7 @@ Run the following commands in your terminal:
 
 These commands should take several minutes to run.
 
+
 **Install Docker Compose**
 
 Run the following commands in your terminal:
@@ -328,6 +329,19 @@ Run the following commands in your terminal:
     # Install Docker Compose into your user's home directory.
     pip3 install --user docker-compose
 
+
+**Configure WSL to Connect to Docker for Windows**
+Type the following the command line in your Linux distro
+
+.. code-block:: sh
+   
+   echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
+
+This appends a line to your :code:`~/.bashrc` file.
+You can check that your .bashrc file has been edited by entering :code:`nano ~/.bashrc` 
+at the Linux command prompt and scrolling to the bottom.
+
+
 Configure Paths
 ***************
 
@@ -336,7 +350,7 @@ by entering the following at the Linux command prompt:
 
 .. code-block:: sh
     
-    nano ~./profile
+    nano ~/.profile
 
 Anywhere on a new line (I entered it at the bottom), add the following: 
 
