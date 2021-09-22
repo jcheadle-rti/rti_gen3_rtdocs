@@ -7,7 +7,7 @@ Overview
 ++++++++
 
 This section continues to walk through the Gen3 `compose-services <https://github.com/uc-cdis/compose-services>`__ repository, 
-starting at the `Using the Data Commons <https://github.com/uc-cdis/compose-services#using-the-data-commons>`__ section.  This section assumes that you 
+starting at the `Using the Data Commons <https://github.com/uc-cdis/compose-services/blob/master/docs/using_the_commons.md>`__ section.  This section assumes that you 
 have completed the previous section (:ref:`compose_services_standup`) successfully.
 
 Using the Data Commons
@@ -62,7 +62,7 @@ I will go over the highlights below.
 First, you must grant the :code:`services.sheepdog-admin` policy to your admin 
 user (the one you signed in with) in the **user.yaml** file.
 
-.. image:: images/compose_services_working/user.yaml.jpg
+.. image:: images/compose_services_working/user.yaml.JPG
    :width: 600
    :alt: how portions of the user.yaml file connect
 
@@ -454,7 +454,7 @@ Ignore this section if your spark service is active (green).
 
 Upon initial start up of the docker-compose stack, the spark service may exit with 
 code 255.  The compose-services repo mentions this issue in the 
-`spark-service-hdfs-reformatting-issue section <https://github.com/uc-cdis/compose-services#spark-service-hdfs-reformatting-issue>`__.  
+`spark-service-hdfs-reformatting-issue section <https://github.com/uc-cdis/compose-services/blob/master/docs/dev_tips.md#spark-service-hdfs-reformatting-issue>`__.  
 Essentially, the solution is to remove the spark-service container and then bring the stack up again.
 
 .. code-block:: sh

@@ -320,6 +320,6 @@ Troubleshooting
 +++++++++++++++
 
 For any steps that you couldn't complete, please refer to the `compose-services README <https://github.com/uc-cdis/compose-services>`__ 
-(and specifically the `dev tips section <https://github.com/uc-cdis/compose-services#dev-tips>`__) 
+(and specifically the `dev tips section <https://github.com/uc-cdis/compose-services/blob/master/docs/dev_tips.md>`__) 
 for help.  Once all steps here are complete, proceed to the next section which 
 covers configuring a working data commons with test data.
