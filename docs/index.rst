@@ -13,14 +13,6 @@ Welcome to RTI Gen3 Deployment's documentation!
    introduction
    prerequisites
    compose_services_standup
-   compose_services_working
    cloud_vm_standup
+   compose_services_working
    data_dictionary_prep
-   glossary
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
-* :ref:`glossary`

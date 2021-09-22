@@ -259,18 +259,12 @@ Simply enter :code:`docker-compose down` at the command line in your repo to shu
 **Congratulations!**  You have successfully configured and locally deployed a Gen3 
 Data Commons for the first time.
 
-Updating compose-services
-++++++++++++++++++++++++++++++++++++++++
+Updating compose-services and Docker Images
++++++++++++++++++++++++++++++++++++++++++++
 
 There are two ways of updating your local installation of Gen3 compose-services: 
 pulling a new version of the repository from git, and pulling a new version of 
 the docker images (performed in the :ref:`update_docker_images` step).
-
-Updating the Docker Images
---------------------------
-
-With Docker Desktop active, at the repo root type :code:`docker-compose pull`.  
-This will pull new versions of the docker images, if they exist.
 
 Updating compose-services
 -------------------------
