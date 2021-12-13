@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; RTI Gen3 Deployment 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Prequisites" href="prerequisites.html" />
+    <link rel="prev" title="Welcome to RTI Gen3 Deployment’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RTI Gen3 Deployment
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-are-data-commons">What are Data Commons?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-fair">What is FAIR?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-investigate-data-commons-fair-tools">Why Investigate Data Commons &amp; FAIR Tools?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#audience-and-purpose-of-this-guide">Audience and Purpose of this Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Prequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_standup.html">Standing up Gen3 Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_standup.html">Standing up Compose Services in an Azure Cloud Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_working.html">Configuring a Working Gen3 Data Commons with Test Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_dictionary_prep.html">Preparing the Data Dictionary for a New Schema</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RTI Gen3 Deployment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>There is a strong dual trend in scientific research which sees increasing
+prevalence of <strong>data commons</strong> environments and <strong>adoption of FAIR principles</strong>
+to facilitate finding scientific data, promote collaboration, and ultimately
+enable new scientific discoveries.  This document provides a coarse overview of
+data commons and FAIR principles, an impetus for why RTI is investigating these
+concepts (and thus impetus for creation for this guide), and finally walks
+through implementation and use of a Gen3 data commons and FAIR tooling
+step-by-step.</p>
+</div>
+<div class="section" id="what-are-data-commons">
+<h2>What are Data Commons?<a class="headerlink" href="#what-are-data-commons" title="Permalink to this headline">¶</a></h2>
+<p>Data Commons are software platforms that collocate data, cloud-based
+computing infrastructure, and commonly-used software applications, tools, and
+services to create a resources for securely managing, analyzing, integrating,
+and sharing data with a research community while protecting privacy. <a class="footnote-reference" href="#id4" id="id2">[1]</a>   Gen3
+is a popular example of a data commons platform used by many institutions to
+create their own data commons.  <a class="reference external" href="https://gen3.biodatacatalyst.nhlbi.nih.gov/">NHLBI BioData Catalyst</a>,
+<a class="reference external" href="https://gen3.theanvil.io/">NHGRI AnVIL</a>, <a class="reference external" href="https://data.kidsfirstdrc.org/login">Gabriella Miller Kids First</a>,
+and <a class="reference external" href="https://nci-crdc.datacommons.io/">NIH Cancer Research Data Commons (CRDC)</a> are all examples of Gen3
+implementations.</p>
+</div>
+<div class="section" id="what-is-fair">
+<h2>What is FAIR?<a class="headerlink" href="#what-is-fair" title="Permalink to this headline">¶</a></h2>
+<p><strong>FAIR</strong> stands for Findable, Accessible, Interoperable, and Repeatable.  It is
+a set of principles for data to which researchers and institutions <em>should</em> adhere
+to maximize the value of their data assets. <a class="footnote-reference" href="#id5" id="id3">[2]</a>   FAIR tools are
+pplications or systems which attempt to assess FAIR-ness of data assets.
+The goal of applying FAIR tools to data assets is to assess the FAIRness of
+data and subsequently make any necessary changes to better adhere to FAIR
+principles.</p>
+</div>
+<div class="section" id="why-investigate-data-commons-fair-tools">
+<h2>Why Investigate Data Commons &amp; FAIR Tools?<a class="headerlink" href="#why-investigate-data-commons-fair-tools" title="Permalink to this headline">¶</a></h2>
+<p>It is of critical importance for RTI competency in Data Commons and FAIR tools
+for 2 primary reasons:</p>
+<p><strong>1. Improve RTI Competency in data commons implementation with current clients.</strong>  Current
+RTI RCD clients (e.g. BioData Catalyst, NIH HEAL) are using data commons
+built on Gen3.  RTI does not have the experience to assist with implementation
+and technical challenges; this creates a dependence upon the Gen3 team and has
+become a bottleneck of success for these clients.</p>
+<p><strong>2. Strategically position RTI for future opportunities.</strong>  Funding institutions
+and federal guidelines encourage or require elements of
+FAIR and practices that are enabled by a data commons architecture.
+See the <a class="reference external" href="https://datascience.nih.gov/sites/default/files/NIH_Strategic_Plan_for_Data_Science_Final_508.pdf">NIH Strategic Plan for Data
+Science (2018)</a>
+and the <a class="reference external" href="https://strategy.data.gov/assets/docs/2020-federal-data-strategy-framework.pdf">Federal Data Strategy Framework (2020)</a>.</p>
+<p>Thus, the creation of this guide is an attempt to fill the gap in RTI’s
+technical competency in data commons and FAIR tools to strategically position
+ourselves for current and future work within these domains.</p>
+</div>
+<div class="section" id="audience-and-purpose-of-this-guide">
+<h2>Audience and Purpose of this Guide<a class="headerlink" href="#audience-and-purpose-of-this-guide" title="Permalink to this headline">¶</a></h2>
+<p>This guide is intended for a computer-savvy user with minimal DevOps experience
+and some familiarity with the Cloud.  The goal of this guide is to stand up a
+Gen3 implementation, understand critical workflows in Gen3, execute those
+workflows, work with data within the context of Gen3, and evaluate the FAIRness
+of the data assets with FAIR tools.  In essence, this is a guidebook for quickly
+building a Gen3 sandbox environment, which may be critical in future RTI endeavors
+that require hands-on implementation experience with data commons environments.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Robert L. Grossman, Data Lakes, Clouds, and Commons:
+A Review of Platforms for Analyzing and Sharing Genomic Data,
+Trends in Genetics 35, 2019, pages 223-234. PMID: 30691868 PMCID: PMC6474403</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Wilkinson, M., Dumontier, M., Aalbersberg, I. et al.
+The FAIR Guiding Principles for scientific data management and stewardship.
+Sci Data 3, 160018 (2016).</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="prerequisites.html" class="btn btn-neutral float-right" title="Prequisites" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to RTI Gen3 Deployment’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Research Triangle Institute
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

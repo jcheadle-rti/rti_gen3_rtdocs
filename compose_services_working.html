@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuring a Working Gen3 Data Commons with Test Data &mdash; RTI Gen3 Deployment 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preparing the Data Dictionary for a New Schema" href="data_dictionary_prep.html" />
+    <link rel="prev" title="Standing up Compose Services in an Azure Cloud Virtual Machine" href="cloud_vm_standup.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RTI Gen3 Deployment
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Prequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_standup.html">Standing up Gen3 Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_standup.html">Standing up Compose Services in an Azure Cloud Virtual Machine</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuring a Working Gen3 Data Commons with Test Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-data-commons">Using the Data Commons</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#spin-up-the-data-commons">Spin up the Data Commons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smoke-test">Smoke Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#granting-permissions">Granting Permissions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#definitions">Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#permissions">Permissions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-program-and-a-project">Create a Program and a Project</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-program">Create a Program</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-project">Create a Project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-submission-permissions">Update Submission Permissions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#upload-test-data">Upload Test Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#generate-test-metadata">Generate Test Metadata</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#edit-test-metadata">Edit Test Metadata</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#upload-test-metadata-to-portal">Upload Test Metadata to Portal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#upload-order">Upload Order</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#verify-test-metadata-upload">Verify Test Metadata Upload</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-portal">Data Portal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#postgresql-database">PostgreSQL Database</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#reconfigure-kibana-and-guppy">Reconfigure Kibana and Guppy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reconfigure-kibana">Reconfigure Kibana</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reconfigure-guppy">Reconfigure Guppy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#troubleshooting-spark-service">Troubleshooting Spark Service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exploration-page">Exploration Page</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#verify-queries-work">Verify Queries Work</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#graph-model">Graph Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flat-model">Flat Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-query-information">Additional Query Information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#closing-thoughts">Closing Thoughts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_dictionary_prep.html">Preparing the Data Dictionary for a New Schema</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RTI Gen3 Deployment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Configuring a Working Gen3 Data Commons with Test Data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/compose_services_working.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuring-a-working-gen3-data-commons-with-test-data">
+<span id="compose-services-working"></span><h1>Configuring a Working Gen3 Data Commons with Test Data<a class="headerlink" href="#configuring-a-working-gen3-data-commons-with-test-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This section continues to walk through the Gen3 <a class="reference external" href="https://github.com/uc-cdis/compose-services">compose-services</a> repository,
+starting at the <a class="reference external" href="https://github.com/uc-cdis/compose-services/blob/master/docs/using_the_commons.md">Using the Data Commons</a> section.  This section assumes that you
+have completed the previous section (<a class="reference internal" href="compose_services_standup.html#compose-services-standup"><span class="std std-ref">Standing up Gen3 Locally</span></a>) successfully.</p>
+</div>
+<div class="section" id="using-the-data-commons">
+<h2>Using the Data Commons<a class="headerlink" href="#using-the-data-commons" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="spin-up-the-data-commons">
+<h3>Spin up the Data Commons<a class="headerlink" href="#spin-up-the-data-commons" title="Permalink to this headline">¶</a></h3>
+<p>If you do not have it up already, bring up the docker-compose stack by typing
+<code class="code docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span> <span class="pre">-d</span></code> at your project repo root.  Wait until you can
+access the data commons at <a class="reference external" href="https://localhost">https://localhost</a>.</p>
+</div>
+<div class="section" id="smoke-test">
+<h3>Smoke Test<a class="headerlink" href="#smoke-test" title="Permalink to this headline">¶</a></h3>
+<p>The smoke test script queries the health-check endpoints of each service.
+Runt he smoke test by typing <code class="code docutils literal notranslate"><span class="pre">bash</span> <span class="pre">smoke_test.sh</span> <span class="pre">localhost</span></code>.</p>
+<p>If any service shows a <code class="code docutils literal notranslate"><span class="pre">500</span></code> response (internal server error), log into
+<a class="reference external" href="https://localhost">https://localhost</a> using your credentials, refresh the page, and try the smoke
+test again.  You should see <code class="code docutils literal notranslate"><span class="pre">200</span></code> responses for each of the services.</p>
+<a class="reference internal image-reference" href="_images/smoke_test.png"><img alt="smoke test for localhost" src="_images/smoke_test.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="granting-permissions">
+<h3>Granting Permissions<a class="headerlink" href="#granting-permissions" title="Permalink to this headline">¶</a></h3>
+<p>Permissions must be granted to your Admin user for any new programs or projects.
+Programs and projects are two required administrative nodes in the Gen3 graph model.
+You can see the Gen3 Graph model visualized at <a class="reference external" href="http://localhost/DD">http://localhost/DD</a>.</p>
+<div class="section" id="definitions">
+<h4>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Programs</strong>: an organization, e.g. TOPMed.  This is the main upstream node in the Gen3 data model.</li>
+<li><strong>Projects</strong>: a study, e.g. <a class="reference external" href="https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001218.v2.p1">NHLBI TOPMed: Genetics Study of Atherosclerosis Risk (GeneSTAR)</a>.  This is the node just downstream of a program, but upstream of all other nodes.</li>
+</ul>
+<p>For the purposes of this guide, we will use simple demo names for the programs
+and projects.</p>
+</div>
+<div class="section" id="permissions">
+<h4>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h4>
+<p>To add data, you must first create a program and project.  However, you must
+first grant yourself access to create see these entities. There is a
+<a class="reference external" href="https://github.com/uc-cdis/fence/blob/master/docs/user.yaml_guide.md#programs-and-projects-crud-access">specific section</a>
+in the Gen3 compose-services repository that guides you through granting permissions.
+I will go over the highlights below.</p>
+<p>First, you must grant the <code class="code docutils literal notranslate"><span class="pre">services.sheepdog-admin</span></code> policy to your admin
+user (the one you signed in with) in the <strong>user.yaml</strong> file.</p>
+<a class="reference internal image-reference" href="_images/user.yaml.JPG"><img alt="how portions of the user.yaml file connect" src="_images/user.yaml.JPG" style="width: 600px;" /></a>
+<p>These permissions should already be set up, but in case they aren’t, make sure
+the appropriate sections look like the figure above (replace the email in
+<code class="code docutils literal notranslate"><span class="pre">groups:users:</span></code> with your email).  Exit out of the user.yaml file once
+you are done editing it.</p>
+<p>To update user privileges while the docker-compose stack is up, enter the following
+at the command line:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it fence-service fence-create sync --arborist http://arborist-service --yaml user.yaml
+</pre></div>
+</div>
+<p>This syncs the user.yaml file with the arborist service, updating user privileges.</p>
+</div>
+</div>
+<div class="section" id="create-a-program-and-a-project">
+<h3>Create a Program and a Project<a class="headerlink" href="#create-a-program-and-a-project" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="create-a-program">
+<h4>Create a Program<a class="headerlink" href="#create-a-program" title="Permalink to this headline">¶</a></h4>
+<p>To create a program, visit the URL to your Gen3 Data Commons (most likely <a class="reference external" href="https://localhost">https://localhost</a>)
+and append ‘/_root’.  It should look like the figure below.</p>
+<a class="reference internal image-reference" href="_images/gen3_root.png"><img alt="screnngrab of the Gen3 localhost/_root page." src="_images/gen3_root.png" style="width: 400px;" /></a>
+<p>Follow the instructions to create a program:</p>
+<ul class="simple">
+<li>Click the slider to Use Form Submission</li>
+<li>Select ‘program’ from the dropdown</li>
+<li>Type in ‘123’ in the <code class="code docutils literal notranslate"><span class="pre">dbgap_accession_number</span></code> field</li>
+<li>Type ‘Program1’ in the <code class="code docutils literal notranslate"><span class="pre">name</span></code> field</li>
+</ul>
+<a class="reference internal image-reference" href="_images/gen3_root_add.png"><img alt="screnngrab of the Gen3 localhost/_root page to add a program." src="_images/gen3_root_add.png" style="width: 400px;" /></a>
+<p>Alternatively, you could upload a JSON document with these fields.  Then, press
+the ‘Submit’ button.  If the submission is successful, you can navigate to
+<a class="reference external" href="https://localhost/Program1">https://localhost/Program1</a> and see an option to upload more content.</p>
+<p>If this does not appear to work, stop the stack and bring it up again with</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker-compose down
+docker-compose up -d
+</pre></div>
+</div>
+<p>Restarting the stack seems to fix many problems with the local Gen3 deployment.</p>
+</div>
+<div class="section" id="create-a-project">
+<h4>Create a Project<a class="headerlink" href="#create-a-project" title="Permalink to this headline">¶</a></h4>
+<p>At <a class="reference external" href="https://localhost/Program1">https://localhost/Program1</a>, fill in the required fields for the project:</p>
+<ul class="simple">
+<li>code: P1</li>
+<li>dbgap_accession_number: phs1</li>
+<li>name: project1</li>
+</ul>
+<p>Then press ‘Submit’.  You should see a confirmation message like below:</p>
+<a class="reference internal image-reference" href="_images/gen3_add_project.png"><img alt="screnngrab of successful project submission." src="_images/gen3_add_project.png" style="width: 400px;" /></a>
+<p>Repeat this for a Program named ‘Program2’ and a corresponding project containing
+the following attributes:</p>
+<ul class="simple">
+<li><strong>code</strong>: P2</li>
+<li><strong>dbgap_accession_number</strong>: phs2</li>
+<li><strong>name</strong>: project2</li>
+</ul>
+</div>
+<div class="section" id="update-submission-permissions">
+<h4>Update Submission Permissions<a class="headerlink" href="#update-submission-permissions" title="Permalink to this headline">¶</a></h4>
+<p>Prior to uploading metadata, you will need to tweak your <strong>Secrets/user.yaml</strong> file so that
+your admin user has permission to view and submit data on the <a class="reference external" href="https://localhost/submissions">https://localhost/submissions</a> page.</p>
+<p><strong>Add programs to group and/or user</strong></p>
+<p>To upload data to the programs you created, you must add the program names under
+the <code class="code docutils literal notranslate"><span class="pre">policies:</span></code> tag in one of your groups <em>OR</em> under your user.  I
+recommend adding it to the <code class="code docutils literal notranslate"><span class="pre">data_submitters</span></code> group, as this likely aligns
+with production processes (adding access to groups as opposed to individual users).</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>groups:
+<span class="c1"># can CRUD programs and projects and upload data files</span>
+- name: data_submitters
+   policies:
+   - services.sheepdog-admin
+   - data_upload
+   - MyFirstProject_submitter
+<span class="hll">   - Program1
+</span><span class="hll">   - Program2
+</span>   users:
+   - &lt;your_admin_email&gt;@gmail.com
+</pre></div>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>users:
+ &lt;your_admin_email&gt;@gmail.com:
+   tags:
+      name: Admin User
+      <span class="c1"># email: mustbe@differentemail.com</span>
+   policies:
+   - services.sheepdog-admin
+   - workspace
+   - data_upload
+<span class="hll">   - Program1
+</span><span class="hll">   - Program2
+</span></pre></div>
+</div>
+<p><strong>Add programs and projects to resources section</strong></p>
+<p>Your programs must be added to <code class="code docutils literal notranslate"><span class="pre">resources/programs</span></code> as well.  Follow the example for
+<code class="code docutils literal notranslate"><span class="pre">MyFirstProgram</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>resources:
+- name: workspace
+- name: data_file
+- name: services
+   subresources:
+   - name: sheepdog
+      subresources:
+      - name: submission
+      subresources:
+      - name: program
+      - name: project
+- name: open
+- name: programs
+   subresources:
+   - name: MyFirstProgram
+      subresources:
+      - name: projects
+      subresources:
+      - name: MyFirstProject
+<span class="hll">   - name: Program1
+</span><span class="hll">      subresources:
+</span><span class="hll">      - name: projects
+</span><span class="hll">      subresources:
+</span><span class="hll">      - name: P1
+</span><span class="hll">   - name: Program2
+</span><span class="hll">      subresources:
+</span><span class="hll">      - name: projects
+</span><span class="hll">      subresources:
+</span><span class="hll">      - name: P2
+</span></pre></div>
+</div>
+<p><strong>Add programs to policies</strong></p>
+<p>Finally, under the <code class="code docutils literal notranslate"><span class="pre">policies</span></code> tag, add the program/project information.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>policies:
+- id: workspace
+ description: be able to use workspace
+ resource_paths:
+   - /workspace
+ role_ids:
+ - workspace_user
+- id: data_upload
+ description: upload raw data files to S3
+ role_ids:
+   - file_uploader
+ resource_paths:
+   - /data_file
+
+...
+
+<span class="hll">- id: Program1
+</span><span class="hll"> role_ids:
+</span><span class="hll">   - reader
+</span><span class="hll">   - creator
+</span><span class="hll">   - updater
+</span><span class="hll">   - deleter
+</span><span class="hll">   - storage_reader
+</span><span class="hll">   - storage_writer
+</span><span class="hll"> resource_paths:
+</span><span class="hll">   - /programs/Program1
+</span><span class="hll">   - /programs/Program1/projects/P1
+</span><span class="hll">- id: Program2
+</span><span class="hll"> role_ids:
+</span><span class="hll">   - admin
+</span><span class="hll">   - reader
+</span><span class="hll">   - creator
+</span><span class="hll">   - updater
+</span><span class="hll">   - deleter
+</span><span class="hll">   - storage_reader
+</span><span class="hll">   - storage_writer
+</span><span class="hll"> resource_paths:
+</span><span class="hll">   - /programs/Program2
+</span><span class="hll">   - /programs/Program2/projects/P2
+</span></pre></div>
+</div>
+<p>You are now ready to submit test data to these projects.</p>
+</div>
+</div>
+</div>
+<div class="section" id="upload-test-data">
+<h2>Upload Test Data<a class="headerlink" href="#upload-test-data" title="Permalink to this headline">¶</a></h2>
+<p>Uploading test data helps you to get a feel for how the data dictionary, data
+explorer page (Windmill), and query page (Guppy) connect.</p>
+<div class="section" id="generate-test-metadata">
+<h3>Generate Test Metadata<a class="headerlink" href="#generate-test-metadata" title="Permalink to this headline">¶</a></h3>
+<p>Gen3 developers use a tool to generate test data that conforms to a particular
+data dictionary.  Currently, the default genomic data commons dictionary is
+active - you can check it by going to <a class="reference external" href="https://localhost/DD">https://localhost/DD</a>.</p>
+<p>Run the tool at your repository root with the following commands:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">TEST_DATA_PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">/testData&quot;</span>
+mkdir -p <span class="s2">&quot;</span><span class="nv">$TEST_DATA_PATH</span><span class="s2">&quot;</span>
+docker run -it -v <span class="s2">&quot;</span><span class="si">${</span><span class="nv">TEST_DATA_PATH</span><span class="si">}</span><span class="s2">:/mnt/data&quot;</span> --rm --name<span class="o">=</span>dsim
+--entrypoint<span class="o">=</span>data-simulator quay.io/cdis/data-simulator:master simulate
+--url https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
+--path /mnt/data --program jnkns --project jenkins --max_samples <span class="m">10</span>
+</pre></div>
+</div>
+<p>If this is your first time running, this will likely pull a new image to your computer.
+After a minute or so, you will see that test data has been generated.</p>
+<a class="reference internal image-reference" href="_images/test_data_generated.png"><img alt="screngrab of generated test metadata." src="_images/test_data_generated.png" style="width: 500px;" /></a>
+<p>Below is an example of a portion of the <strong>diagnosis.json</strong> file, which shows a
+list of metadata for the properties of the <code class="code docutils literal notranslate"><span class="pre">Diagnosis</span></code> node.</p>
+<a class="reference internal image-reference" href="_images/diagnosis_file.png"><img alt="screengrab of generated test metadata." src="_images/diagnosis_file.png" style="width: 500px;" /></a>
+<div class="section" id="edit-test-metadata">
+<h4>Edit Test Metadata<a class="headerlink" href="#edit-test-metadata" title="Permalink to this headline">¶</a></h4>
+<p>The test metadata generated here is for the project <strong>‘Jenkins’</strong>, which does not
+match any of our project names.  Thus, we must change the project name for the
+relevant files, which are as follows:</p>
+<ul class="simple">
+<li>acknowledgement.json</li>
+<li>experiment.json</li>
+<li>keyword.json</li>
+<li>publication.json</li>
+<li>core_metadata_collection.json</li>
+</ul>
+<p>These files are all at the top of the hierarchy in the data dictionary.</p>
+<p>To do this, you may find &amp; replace using your preferred text editor.  You can
+alternatively run the following command at your repo root:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>find ./testData -type f -name <span class="s2">&quot;*.json&quot;</span> <span class="p">|</span> xargs sed -i <span class="s1">&#39;s/Jenkins/P1/g&#39;</span>
+</pre></div>
+</div>
+<p>This command finds every JSON file in the <code class="code docutils literal notranslate"><span class="pre">testData</span></code> folder that contains ‘Jenkins’
+and replaces it with ‘P1’, which has been chosen as the project name for Program1
+in this guide.</p>
+</div>
+</div>
+<div class="section" id="upload-test-metadata-to-portal">
+<h3>Upload Test Metadata to Portal<a class="headerlink" href="#upload-test-metadata-to-portal" title="Permalink to this headline">¶</a></h3>
+<p>Go to <a class="reference external" href="https://localhost/submission">https://localhost/submission</a> to begin upload of test metadata to the Data Portal UI.
+A general guide to this submission is located on <a class="reference external" href="https://gen3.org/resources/user/submit-data/">gen3.org’s website</a>.</p>
+<div class="section" id="upload-order">
+<h4>Upload Order<a class="headerlink" href="#upload-order" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="_images/graph_model.png"><img alt="picture of the generic commons graph model." src="_images/graph_model.png" style="width: 600px;" /></a>
+<p>Metadata must be uploaded according to the hierarchy in the graph model. Otherwise,
+you will get a <code class="code docutils literal notranslate"><span class="pre">FAILED:</span> <span class="pre">400</span></code> error.  For example, if ‘Slide’ metadata was
+uploaded prior to uploading the ‘Sample’ metadata, an error would occur.  Therefore,
+make sure the nodes upstream of the node for which you want to populate metadata is uploaded first:</p>
+<ul class="simple">
+<li>Acknowledgement, Experiment, Keyword, Publication</li>
+<li>Case, Core Metadata Collection</li>
+<li>Diagnosis, Demographic, Exposure, Family History</li>
+<li>Clinical Test, Treatment, Sample</li>
+<li>Aliquot, Slide</li>
+<li>Read Group</li>
+<li>Submitted Copy Number, Submitted Unaligned Reads, Submitted Somatic Mutation, Submitted Aligned Reads, Submitted Methylation, Slide Image, Slide Count, Experimental Metadata</li>
+<li>Read Group QC, Aligned Reads Index</li>
+</ul>
+<p>You should see the two programs and associated projects that were created in the
+previous steps.  Choose one of the projects - if you replaced ‘Jenkins’ with ‘P1’, used Program1-P1 -
+and click the ‘Submit Data’ button next to it.  Next, click the ‘Upload file’
+button and upload the 27 JSON files that are contained within the <code class="code docutils literal notranslate"><span class="pre">./testData</span></code> repository.
+This is a bit tedious but should only take a few minutes.</p>
+</div>
+</div>
+<div class="section" id="verify-test-metadata-upload">
+<h3>Verify Test Metadata Upload<a class="headerlink" href="#verify-test-metadata-upload" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="data-portal">
+<h4>Data Portal<a class="headerlink" href="#data-portal" title="Permalink to this headline">¶</a></h4>
+<p>You may need to bring the docker-compose stack down and up again to see the changes
+in the data portal.  Afer the restart, log in and see that the data commons
+landing page dashboard now has a populated chart.</p>
+<a class="reference internal image-reference" href="_images/data_commons_front_page.png"><img alt="picture of the Gen3 landing page with dashboard populated." src="_images/data_commons_front_page.png" style="width: 700px;" /></a>
+<p>You can also see data at, for instance, <a class="reference external" href="https://localhost/Program1-P1/search?node_type=sample">https://localhost/Program1-P1/search?node_type=sample</a>,
+which shows the metadata recently uploaded to the sample node.</p>
+</div>
+<div class="section" id="postgresql-database">
+<h4>PostgreSQL Database<a class="headerlink" href="#postgresql-database" title="Permalink to this headline">¶</a></h4>
+<p>Per the compose-services model <a class="reference external" href="https://github.com/uc-cdis/compose-services/blob/master/SandboxContainers.jpg">here</a>,
+data gets passed to the Postgres database for persistence.  We can verify metadata
+is in the PostgreSQL container by first clicking on CLI for the postgres container
+in Docker Compose, then entering the following commands:</p>
+<a class="reference internal image-reference" href="_images/postgres_container_cli.png"><img alt="screengrab of postgres container CLI in Docker Compose." src="_images/postgres_container_cli.png" style="width: 700px;" /></a>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>su postgres <span class="c1"># this changes to the postgres user</span>
+psql <span class="c1"># this starts psql</span>
+<span class="se">\l</span> <span class="c1"># this lists databases</span>
+<span class="se">\c</span> metadata_db <span class="c1"># this connects to the e.g. metadata_db database</span>
+SELECT * FROM node_acknowledgement <span class="c1"># This brings back data from the node_acknowledgement table</span>
+</pre></div>
+</div>
+<p>Using those commands, you shoudl see data under the <code class="code docutils literal notranslate"><span class="pre">node_id</span></code> column.  In
+particular, you should see the program/project you created listed as the value
+for the <code class="code docutils literal notranslate"><span class="pre">project_id</span></code> key.</p>
+<a class="reference internal image-reference" href="_images/acknowledgement_node.png"><img alt="postgresql results in acknowledgement node" src="_images/acknowledgement_node.png" style="width: 700px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="reconfigure-kibana-and-guppy">
+<h2>Reconfigure Kibana and Guppy<a class="headerlink" href="#reconfigure-kibana-and-guppy" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have created a program, a project, generated test metadata, and
+uploaded simulated test metadata via the Data Portal UI, we can reconfigure
+Kibana and Guppy.</p>
+<div class="section" id="reconfigure-kibana">
+<h3>Reconfigure Kibana<a class="headerlink" href="#reconfigure-kibana" title="Permalink to this headline">¶</a></h3>
+<p>Uncomment the kibana-service from the docker-compose.yaml file.  It should look
+like the image below.</p>
+<a class="reference internal image-reference" href="_images/kibana_docker_compose.png"><img alt="uncomment kibana section in docker-compose" src="_images/kibana_docker_compose.png" style="width: 500px;" /></a>
+</div>
+<div class="section" id="reconfigure-guppy">
+<h3>Reconfigure Guppy<a class="headerlink" href="#reconfigure-guppy" title="Permalink to this headline">¶</a></h3>
+<p>Reconfigure Guppy to show the exploration page facets and allow for GraphQL queries
+on the Query page.  This sub-section follows the instructions on
+<a class="reference external" href="https://github.com/uc-cdis/compose-services#configuring-guppy-for-exploration-page">this</a> page.</p>
+<p>First, re-enable nginx.conf by removing the comments from the guppy section.</p>
+<a class="reference internal image-reference" href="_images/nginx_conf_guppy.png"><img alt="uncomment guppy section in nginx.conf" src="_images/nginx_conf_guppy.png" style="width: 500px;" /></a>
+<div class="section" id="troubleshooting-spark-service">
+<h4>Troubleshooting Spark Service<a class="headerlink" href="#troubleshooting-spark-service" title="Permalink to this headline">¶</a></h4>
+<a class="reference internal image-reference" href="_images/spark_255.png"><img alt="spark service occasionally exits with a code 255" src="_images/spark_255.png" style="width: 600px;" /></a>
+<p>Ignore this section if your spark service is active (green).</p>
+<p>Upon initial start up of the docker-compose stack, the spark service may exit with
+code 255.  The compose-services repo mentions this issue in the
+<a class="reference external" href="https://github.com/uc-cdis/compose-services/blob/master/docs/dev_tips.md#spark-service-hdfs-reformatting-issue">spark-service-hdfs-reformatting-issue section</a>.
+Essentially, the solution is to remove the spark-service container and then bring the stack up again.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker rm spark-service
+docker-compose up -d
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-dependencies">
+<h4>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h4>
+<p>Once the spark-service container is active (green), install the necessary dependencies
+for the tube-service container and run the guppy setup from the repo root:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker <span class="nb">exec</span> -it tube-service bash -c <span class="s2">&quot;cd /tmp/datadictionary &amp;&amp; pip install .&quot;</span>
+bash ./guppy_setup.sh
+</pre></div>
+</div>
+<p>This should take a few minutes to run.</p>
+</div>
+<div class="section" id="exploration-page">
+<h4>Exploration Page<a class="headerlink" href="#exploration-page" title="Permalink to this headline">¶</a></h4>
+<p>Once complete, navigate to the Exploration page, and see that it is now populated
+with metadata.</p>
+<a class="reference internal image-reference" href="_images/explorer.png"><img alt="explorer page populated with metadata" src="_images/explorer.png" style="width: 700px;" /></a>
+</div>
+</div>
+<div class="section" id="verify-queries-work">
+<h3>Verify Queries Work<a class="headerlink" href="#verify-queries-work" title="Permalink to this headline">¶</a></h3>
+<p>Queries are possible against two different data models - the graph model and the
+flat model.  The graph model can be seen at <a class="reference external" href="https://localhost/DD">https://localhost/DD</a>, whereas the flat
+model is the ETL’d version of the graph model to Elasticsearch for quick retrieval.</p>
+<div class="section" id="graph-model">
+<h4>Graph Model<a class="headerlink" href="#graph-model" title="Permalink to this headline">¶</a></h4>
+<p>All nodes of the graph model can be queried.  See an example below.</p>
+<a class="reference internal image-reference" href="_images/query_graph.png"><img alt="example query against the graph model" src="_images/query_graph.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="flat-model">
+<h4>Flat Model<a class="headerlink" href="#flat-model" title="Permalink to this headline">¶</a></h4>
+<p>In this data commons only <code class="code docutils literal notranslate"><span class="pre">case</span></code> and <code class="code docutils literal notranslate"><span class="pre">file</span></code> metadata may be queried.
+In addition, one can perform aggregations over these nodes.  This is outside of the
+scope of this guide.  See an example below.</p>
+<a class="reference internal image-reference" href="_images/query_flat.png"><img alt="example query against the flat model" src="_images/query_flat.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="additional-query-information">
+<h4>Additional Query Information<a class="headerlink" href="#additional-query-information" title="Permalink to this headline">¶</a></h4>
+<p>More information on queries can be found on the GitHub repo for Guppy, specifically
+the Guppy Query Syntax page (<a class="reference external" href="https://github.com/uc-cdis/guppy/blob/master/doc/queries.md">https://github.com/uc-cdis/guppy/blob/master/doc/queries.md</a>)</p>
+</div>
+</div>
+</div>
+<div class="section" id="closing-thoughts">
+<h2>Closing Thoughts<a class="headerlink" href="#closing-thoughts" title="Permalink to this headline">¶</a></h2>
+<p>At this point, you <em>should</em> have a working data commons with test data that can
+be explored in Data Explorer and queried with Guppy.  The point of the guide up
+to this point is to show the inner workings of Gen3 such that it can be
+customized for the needs of your scientific community.</p>
+<p>Future pages in this guide will instruct users on how to customize the look and
+content of their Gen3 deployment and run through a workflow of adding real data
+from publicly available datasets, editing the data dictionary, and performing
+basic analyses in Jupyter Notebooks.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="data_dictionary_prep.html" class="btn btn-neutral float-right" title="Preparing the Data Dictionary for a New Schema" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cloud_vm_standup.html" class="btn btn-neutral float-left" title="Standing up Compose Services in an Azure Cloud Virtual Machine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Research Triangle Institute
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

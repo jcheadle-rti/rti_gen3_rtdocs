@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Prequisites &mdash; RTI Gen3 Deployment 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Standing up Gen3 Locally" href="compose_services_standup.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RTI Gen3 Deployment
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Prequisites</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-wsl">Installing WSL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#checking-windows-version">Checking Windows Version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installing-wsl-for-the-first-time-wsl-1">Installing WSL for the First Time (WSL 1)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#upgrading-to-wsl-2">Upgrading to WSL 2</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-a-linux-distribution">Installing a Linux Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#launching-for-the-first-time">Launching for the First Time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#check-your-distribution-s">Check your Distribution(s)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#change-your-wsl-version">Change your WSL Version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-bash">Installing Bash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-docker-desktop-for-windows">Installing Docker Desktop for Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-docker">Installing Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-the-docker-backend">Changing the Docker Backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-desktop-hyper-v-backend-wsl-1">Docker Desktop Hyper-V Backend (WSL 1)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-docker-and-docker-compose-in-your-wsl-1-linux-distribution">Install Docker and Docker Compose in your WSL 1 Linux Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-paths">Configure Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#check-settings">Check Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-desktop-wsl-2-backend">Docker Desktop WSL 2 Backend</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#disable-mcafee-access-protection">Disable McAfee Access Protection</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#other-considerations">Other Considerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#docker-memory-settings">Docker Memory Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-group-membership">Docker Group Membership</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disk-drive-space">Disk Drive Space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#github-credentials">GitHub Credentials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#resources">Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_standup.html">Standing up Gen3 Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_standup.html">Standing up Compose Services in an Azure Cloud Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_working.html">Configuring a Working Gen3 Data Commons with Test Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_dictionary_prep.html">Preparing the Data Dictionary for a New Schema</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RTI Gen3 Deployment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Prequisites</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/prerequisites.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="prequisites">
+<span id="prerequisites"></span><h1>Prequisites<a class="headerlink" href="#prequisites" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This guide is written specifically for Windows users, specifically running
+Windows Subsystem for Linux (WSL).  Users with other operating systems
+(macOS, Linux) <em>should</em> be able to follow along with this guide well,
+ignoring Windows-specific instructions where appropriate.</p>
+<p>The following is a synthesis of publicly-available documentation designed to
+get users up and running with the infrastructure needed to deploy Gen3 locally
+on a Windows machine.  In this section we cover the following topics:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#installing-wsl"><span class="std std-ref">Installing WSL</span></a></li>
+<li><a class="reference internal" href="#installing-linux"><span class="std std-ref">Installing a Linux Distribution</span></a></li>
+<li><a class="reference internal" href="#installing-bash"><span class="std std-ref">Installing Bash</span></a></li>
+<li><a class="reference internal" href="#docker-desktop"><span class="std std-ref">Installing Docker Desktop for Windows</span></a></li>
+</ul>
+<p>We also cover other considerations for Gen3 deployment on a local machine,
+such as settings and disk drive space needed.</p>
+</div>
+<div class="section" id="installing-wsl">
+<span id="id1"></span><h2>Installing WSL<a class="headerlink" href="#installing-wsl" title="Permalink to this headline">¶</a></h2>
+<p>This section will walk through installation of WSL.  Windows provides very
+thorough <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/">documentation</a>,
+which will be worked through in this section.   At
+the time of writing there are two versions of WSL - WSL 1 and WSL 2.  You can
+explore the differences between these versions in a subsection of this guide,
+located <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/compare-versions">here</a>.
+While WSL 2 is desirable because it is faster than WSL 1,
+<strong>I recommend WSL 1 for this guide.</strong>  At the time of writing, the WSL 2
+back end for Docker requires disabling of a McAfee feature to run properly,
+which is a potential security threat.  I will still go over how to enable
+WSL 2 in this guide.</p>
+<div class="section" id="checking-windows-version">
+<h3>Checking Windows Version<a class="headerlink" href="#checking-windows-version" title="Permalink to this headline">¶</a></h3>
+<p>All employees at RTI should have a version of Windows 10 that will accommodate
+WSL.  To ensure that this is the case, check your Windows version by opening
+the command prompt (click the search bar, type in <code class="code docutils literal notranslate"><span class="pre">cmd</span></code>).
+Once at the command prompt, type in <code class="code docutils literal notranslate"><span class="pre">winver</span></code> and press enter.  Windows OS
+information will appear in a pop-up.</p>
+<a class="reference internal image-reference" href="_images/winver.png"><img alt="An image showing the Windows Version" src="_images/winver.png" style="width: 400px;" /></a>
+<p>To install WSL 2, the OS version must be greater or equal to 1903,
+and the build must be 18362 or higher.  If it is lower than that, you can
+use WSL1.  WSL is not supported for builds lower than 18362.</p>
+</div>
+<div class="section" id="installing-wsl-for-the-first-time-wsl-1">
+<h3>Installing WSL for the First Time (WSL 1)<a class="headerlink" href="#installing-wsl-for-the-first-time-wsl-1" title="Permalink to this headline">¶</a></h3>
+<p>This subsection follows the <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10#manual-installation-steps">Manual Installation Steps</a>
+to install WSL for the first time.</p>
+<p>Open Windows PowerShell as an Administrator and run the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/enable_wsl.png"><img alt="A screencap of the PowerShell Terminal" src="_images/enable_wsl.png" style="width: 600px;" /></a>
+<p>This will only take a few seconds to install.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If running this command doesn’t seem to do anything, it’s possible Windows
+already has Windows Subsystem for Linux Enabled.  To check, navigate to
+Windows Settings, then find ‘Programs and Features’ under the Related
+settings header on the right side of the screen.  In the left pane, click
+on the hyperlink to ‘Turn Windows features on or off’, then navigate all the
+way down until you see <strong>Windows Subsystem for Linux</strong>, and verify the box is
+checked.</p>
+</div>
+<a class="reference internal image-reference" href="_images/windows_features_wsl.png"><img alt="A screencap of the Windows Features dialogue box" src="_images/windows_features_wsl.png" style="width: 400px;" /></a>
+<p>If you are interested in upgrading to WSL2 from WSL1, continue with the section
+below.  Otherwise, continue to the <a class="reference internal" href="#installing-linux"><span class="std std-ref">Installing a Linux Distribution</span></a> section.</p>
+</div>
+<div class="section" id="upgrading-to-wsl-2">
+<h3>Upgrading to WSL 2<a class="headerlink" href="#upgrading-to-wsl-2" title="Permalink to this headline">¶</a></h3>
+<p>Before installing WSL 2, enable the Virtual Machine Platform optional feature
+by running the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/enable_vmp.png"><img alt="A screencap of the PowerShell Terminal - enable Virtual Machine Platform" src="_images/enable_vmp.png" style="width: 600px;" /></a>
+<p>This will only take a few seconds to install.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If running this command doesn’t seem to do anything, it’s possible Windows
+already has Windows Subsystem for Linux Enabled.  To check, navigate to
+Windows Settings, then find ‘Programs and Features’ under the Related
+settings header on the right side of the screen.  In the left pane, click
+on the hyperlink to ‘Turn Windows features on or off’, then navigate all the
+way down until you see <strong>Virtual Machine Platform</strong>, and verify the box is
+checked.</p>
+</div>
+<a class="reference internal image-reference" href="_images/windows_features_vmp.png"><img alt="A screencap of the Windows Features dialogue box" src="_images/windows_features_vmp.png" style="width: 400px;" /></a>
+<p>Next, download the <a class="reference external" href="https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi">latest WSL2 package</a>
+and run the installation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you get an ‘access denied’ message when trying to run this command,
+open PowerShell <em>without</em> Admin Access (i.e. just your normal user).</p>
+</div>
+</div>
+</div>
+<div class="section" id="installing-a-linux-distribution">
+<span id="installing-linux"></span><h2>Installing a Linux Distribution<a class="headerlink" href="#installing-a-linux-distribution" title="Permalink to this headline">¶</a></h2>
+<p>Open the Microsoft Store to download a Linux distribution.
+I recommend one of the Ubuntu distributions, either 18.04 or 20.04,
+which come with bash pre-installed.
+- <a class="reference external" href="https://www.microsoft.com/store/apps/9N9TNGVNDL3Q">Ubuntu 18.04 LTS</a>
+- <a class="reference external" href="https://www.microsoft.com/store/apps/9n6svws3rx71">Ubuntu 20.04 LTS</a></p>
+<div class="section" id="launching-for-the-first-time">
+<h3>Launching for the First Time<a class="headerlink" href="#launching-for-the-first-time" title="Permalink to this headline">¶</a></h3>
+<p>Upon launching a Linux distribution (e.g. Ubuntu 18.04 LTS) for the first time,
+files will be unzipped and you will be prompted for a UNIX username and password.
+Once complete, you will see the default bash prompt:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>&lt;username&gt;@&lt;hostname&gt;:~$
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/install_bash.png"><img alt="A screencap of bash installing" src="_images/install_bash.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/bash_prompt.png"><img alt="A screencap of the bash prompt" src="_images/bash_prompt.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="check-your-distribution-s">
+<h3>Check your Distribution(s)<a class="headerlink" href="#check-your-distribution-s" title="Permalink to this headline">¶</a></h3>
+<p>To check the Linux distributions on your windows machine, open PowerShell
+(not as an Administrator) and type <code class="code docutils literal notranslate"><span class="pre">wsl</span> <span class="pre">-l</span> <span class="pre">-v</span></code>, which means
+‘list all distributions in a verbose way’.  An example below shows two
+Linux distributions.</p>
+<a class="reference internal image-reference" href="_images/linux_distros.png"><img alt="A screencap of available linux distros" src="_images/linux_distros.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="change-your-wsl-version">
+<h3>Change your WSL Version<a class="headerlink" href="#change-your-wsl-version" title="Permalink to this headline">¶</a></h3>
+<p>If for some reason you want or need to change your WSL version in your
+Linux distro, the command is <code class="code docutils literal notranslate"><span class="pre">wsl</span> <span class="pre">--set-version</span> <span class="pre">&lt;Distro&gt;</span> <span class="pre">&lt;Version&gt;</span></code>.
+For example, below I’ve changed the WSL Version of Ubuntu-18.04 to WSL 1.</p>
+<a class="reference internal image-reference" href="_images/linux_versions.png"><img alt="A screencap showing the linux version change" src="_images/linux_versions.png" style="width: 600px;" /></a>
+</div>
+</div>
+<div class="section" id="installing-bash">
+<span id="id2"></span><h2>Installing Bash<a class="headerlink" href="#installing-bash" title="Permalink to this headline">¶</a></h2>
+<p>Bash is a text-based shell and command language.  Bash should be included within
+any Linux Distribution that was installed, e.g. Ubuntu.  If it is not, navigate
+to the <a class="reference external" href="https://www.gnu.org/software/bash/manual/html_node/Installing-Bash.html">gnu.org</a> site
+to learn how to install Bash on the Linux distribution you downloaded.</p>
+<p>To check whether you are using Bash in your Linux Distribution, type
+<code class="code docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$0</span></code> at the command prompt, which tells you the name of the
+running process.  It should return ‘bash’ or something similar if you are
+currently running Bash.  Alternatively, you could type
+<code class="code docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$BASH_VERSION</span></code>  to understand which version of Bash you are running.</p>
+<a class="reference internal image-reference" href="_images/bash_version.png"><img alt="A screencap of the bash version" src="_images/bash_version.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="installing-docker-desktop-for-windows">
+<span id="docker-desktop"></span><h2>Installing Docker Desktop for Windows<a class="headerlink" href="#installing-docker-desktop-for-windows" title="Permalink to this headline">¶</a></h2>
+<p>As alluded to in the beginning of this document, the installation details for
+Docker Desktop for Windows are different depending on whether you are using
+WSL 1 or WSL 2, so I detail both these approaches below.</p>
+<div class="section" id="installing-docker">
+<h3>Installing Docker<a class="headerlink" href="#installing-docker" title="Permalink to this headline">¶</a></h3>
+<p>Following along with the <a class="reference external" href="https://docs.docker.com/docker-for-windows/install/">Docker documentation</a>,
+Download Docker from <a class="reference external" href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">Docker Hub</a>.
+Run the downloaded executable (Version 3.1.0 at time of writing).
+If prompted, ensure the <code class="code docutils literal notranslate"><span class="pre">Enable</span> <span class="pre">Hyper-V</span> <span class="pre">Windows</span> <span class="pre">Features</span></code> option is
+selected on the configuration page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>if you already have an older version of docker installed and need to perform
+an <strong>uninstall</strong> of your current version, open task manager as an Administrator and
+end the <code class="code docutils literal notranslate"><span class="pre">Docker.Service</span></code> task.</p>
+<p>In PowerShell with Admin mode enabled, type the following at the command prompt:</p>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="p">&amp;</span> <span class="s2">&quot;C:\Program Files\Docker\Docker\Docker Desktop Installer.exe&quot;</span> uninstall
+</pre></div>
+</div>
+</div></blockquote>
+<p class="last">The uninstall will take a few minutes.  Then, from a PowerShell terminal,
+unregister the docker distros (if they exist) using <code class="code docutils literal notranslate"><span class="pre">wsl</span> <span class="pre">--unregister</span> <span class="pre">&lt;distro_name&gt;</span></code>.
+Afterwards, restart your computer, and perform a fresh install of Docker
+from the previously-downloaded installer.</p>
+</div>
+</div>
+<div class="section" id="changing-the-docker-backend">
+<span id="docker-backend"></span><h3>Changing the Docker Backend<a class="headerlink" href="#changing-the-docker-backend" title="Permalink to this headline">¶</a></h3>
+<p>When writing this guide, I encountered a problem in which Docker would not
+start with the WSL 2 back end enabled.  The reason why will be covered in the
+WSL section, but if you encounter this issue on a fresh install, there is a
+simple fix to prevent this issue.</p>
+<p>First, navigate to the following path: <code class="code docutils literal notranslate"><span class="pre">C:\Users\your</span> <span class="pre">windows</span> <span class="pre">username\AppData\Roaming\Docker</span></code>
+and replace <code class="code docutils literal notranslate"><span class="pre">your</span> <span class="pre">windows</span> <span class="pre">username</span></code> with your user name, e.g. jcheadle.
+Second, find the settings.json file, and set the following line from true to false:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;wslEngineEnabled&quot;</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>Upon restarting the program, Docker will start with the Hyper-V backend.</p>
+</div>
+<div class="section" id="docker-desktop-hyper-v-backend-wsl-1">
+<h3>Docker Desktop Hyper-V Backend (WSL 1)<a class="headerlink" href="#docker-desktop-hyper-v-backend-wsl-1" title="Permalink to this headline">¶</a></h3>
+<p>An excellent guide to getting Docker Desktop to work with the Hyper-V backend and
+WSL is linked <a class="reference external" href="https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly">here</a>.
+I’ll paraphrase the steps needed below.</p>
+<p>If necessary, set the WSL 2 backend to ‘false’ so that Docker Desktop does not
+hang upon start up (described above in <a class="reference internal" href="#docker-backend"><span class="std std-ref">Changing the Docker Backend</span></a>).</p>
+<p>Double-click Docker Desktop to start it up.  If it prompts you to use WSL 2,
+just choose the ‘not now’ option.  Once started (this should take about a minute),
+navigate to ‘settings’ and check ‘Expose daemon on <a class="reference external" href="tcp://localhost:2375">tcp://localhost:2375</a> without TLS’.
+Then click ‘Apply’ &amp; restart Docker Desktop.</p>
+<a class="reference internal image-reference" href="_images/docker_desktop_settings.png"><img alt="A screencap of Docker Desktop settings" src="_images/docker_desktop_settings.png" style="width: 600px;" /></a>
+<div class="section" id="install-docker-and-docker-compose-in-your-wsl-1-linux-distribution">
+<h4>Install Docker and Docker Compose in your WSL 1 Linux Distribution<a class="headerlink" href="#install-docker-and-docker-compose-in-your-wsl-1-linux-distribution" title="Permalink to this headline">¶</a></h4>
+<p><strong>Install Docker and other Linux Components</strong></p>
+<p>Run the following commands in your terminal:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update the apt package list.</span>
+sudo apt-get update -y
+<span class="c1"># Install Docker&#39;s package dependencies.</span>
+sudo apt-get install -y <span class="se">\</span>
+apt-transport-https <span class="se">\</span>
+ca-certificates <span class="se">\</span>
+curl <span class="se">\</span>
+software-properties-common
+<span class="c1"># Download and add Docker&#39;s official public PGP key.</span>
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
+<span class="c1"># Verify the fingerprint.</span>
+sudo apt-key fingerprint 0EBFCD88
+<span class="c1"># Add the `stable` channel&#39;s Docker upstream repository.</span>
+<span class="c1">#</span>
+<span class="c1"># If you want to live on the edge, you can change &quot;stable&quot; below to &quot;test&quot; or</span>
+<span class="c1"># &quot;nightly&quot;. I highly recommend sticking with stable!</span>
+sudo add-apt-repository <span class="se">\</span>
+<span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
+<span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> \</span>
+<span class="s2">stable&quot;</span>
+<span class="c1"># Update the apt package list (for the new apt repo).</span>
+sudo apt-get update -y
+<span class="c1"># Install the latest version of Docker CE.</span>
+sudo apt-get install -y docker-ce
+<span class="c1"># Allow your user to access the Docker CLI without needing root access.</span>
+sudo usermod -aG docker <span class="nv">$USER</span>
+</pre></div>
+</div>
+<p>These commands should take several minutes to run.</p>
+<p><strong>Install Docker Compose</strong></p>
+<p>Run the following commands in your terminal:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Python 3 and PIP.</span>
+sudo apt-get install -y python3 python3-pip
+<span class="c1"># Also upgrade pip -</span>
+pip3 install --upgrade pip
+<span class="c1"># Install Docker Compose into your user&#39;s home directory.</span>
+pip3 install --user docker-compose
+</pre></div>
+</div>
+<p><strong>Configure WSL to Connect to Docker for Windows</strong>
+Type the following the command line in your Linux distro</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">&quot;export DOCKER_HOST=tcp://localhost:2375&quot;</span> &gt;&gt; ~/.bashrc <span class="o">&amp;&amp;</span> <span class="nb">source</span> ~/.bashrc
+</pre></div>
+</div>
+<p>This appends a line to your <code class="code docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file.
+You can check that your .bashrc file has been edited by entering <code class="code docutils literal notranslate"><span class="pre">nano</span> <span class="pre">~/.bashrc</span></code>
+at the Linux command prompt and scrolling to the bottom.</p>
+</div>
+<div class="section" id="configure-paths">
+<h4>Configure Paths<a class="headerlink" href="#configure-paths" title="Permalink to this headline">¶</a></h4>
+<p><strong>Make sure $HOME/.local/bin is set on your WSL $PATH</strong>.  Open your profile path
+by entering the following at the Linux command prompt:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>nano ~/.profile
+</pre></div>
+</div>
+<p>Anywhere on a new line (I entered it at the bottom), add the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PATH</span><span class="s2">:</span><span class="nv">$HOME</span><span class="s2">/.local/bin&quot;</span>
+</pre></div>
+</div>
+<p>Then save the file.  Enter <code class="code docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$PATH</span></code> at the command prompt, and confirm
+that <code class="code docutils literal notranslate"><span class="pre">$HOME/.local/bin</span></code> is there.  For me, <code class="code docutils literal notranslate"><span class="pre">$HOME</span></code> resolves to
+<code class="code docutils literal notranslate"><span class="pre">/home/jcheadle</span></code>.</p>
+<a class="reference internal image-reference" href="_images/pythonpath.png"><img alt="A screencap of $PATH variable" src="_images/pythonpath.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="check-settings">
+<h4>Check Settings<a class="headerlink" href="#check-settings" title="Permalink to this headline">¶</a></h4>
+<p><strong>Check that Docker &amp; Docker Compose work</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># You should get a bunch of output about your Docker daemon.</span>
+<span class="c1"># If you get a permission denied error, close + open your terminal and try again.</span>
+docker info
+<span class="c1"># You should get back your Docker Compose version.</span>
+docker-compose --version
+</pre></div>
+</div>
+<p><strong>Ensure Volume Mounts Work</strong></p>
+<p>There is a mismatch of expectations for file paths between Docker and WSL.
+Docker expects a path like <code class="code docutils literal notranslate"><span class="pre">/c/Users/&lt;your</span> <span class="pre">Windows</span> <span class="pre">username&gt;</span></code>, whereas
+WSL expects a path like <code class="code docutils literal notranslate"><span class="pre">/mnt/c/Users/&lt;your</span> <span class="pre">Windows</span> <span class="pre">username&gt;</span></code>.  The
+solution lies in configuring the <strong>wsl.conf</strong> file.  At the Linux command prompt,
+enter the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo nano /etc/wsl.conf
+<span class="c1"># Now make it look like this and save the file when you&#39;re done:</span>
+<span class="o">[</span>automount<span class="o">]</span>
+<span class="nv">root</span> <span class="o">=</span> /
+<span class="nv">options</span> <span class="o">=</span> <span class="s2">&quot;metadata&quot;</span>
+</pre></div>
+</div>
+<p>Fully restart your computer for this change to take effect.  Then, test with a
+Linux command on wsl, such as <code class="code docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-lah</span> <span class="pre">/c/users</span></code> (normally this would fail
+as you would need to preface the file path with /mnt) to ensure the setting
+change took effect.</p>
+</div>
+</div>
+<div class="section" id="docker-desktop-wsl-2-backend">
+<h3>Docker Desktop WSL 2 Backend<a class="headerlink" href="#docker-desktop-wsl-2-backend" title="Permalink to this headline">¶</a></h3>
+<p>To enable Docker to work with WSL2, follow the guide <a class="reference external" href="https://docs.docker.com/docker-for-windows/wsl/">here</a>.
+Using Docker with WSL 2 as opposed to WSL 1 increases speed and improves
+resource consumption.</p>
+<div class="section" id="disable-mcafee-access-protection">
+<h4>Disable McAfee Access Protection<a class="headerlink" href="#disable-mcafee-access-protection" title="Permalink to this headline">¶</a></h4>
+<p>In my experience, it was required to disable the <strong>Threat Prevention -&gt; Enable Access Protection</strong> setting in McAfee.
+Note that you should contact GTS or your IT Strategies Team Leader in case you
+need a risk waiver prior to making this setting change.</p>
+<a class="reference internal image-reference" href="_images/mcafee.png"><img alt="A screencap of a McAfee Endpoint Security setting" src="_images/mcafee.png" style="width: 300px;" /></a>
+<p>Run Docker Desktop for Windows, then navigate to <strong>Settings -&gt; General</strong> and
+check the box for <strong>‘Use the WSL 2 based engine’</strong>.  Then click <strong>‘Apply &amp; Restart’.</strong>
+This step may take several minutes.</p>
+<a class="reference internal image-reference" href="_images/docker_desktop_settings_wsl2.png"><img alt="A screencap of Docker Desktop settings" src="_images/docker_desktop_settings_wsl2.png" style="width: 600px;" /></a>
+<p>After the Docker container has restarted, it may prompt for enabling integration
+with WSL2 distros.  Here, ensure that your target distro is enabled.  If Docker
+does not prompt you to do this, go to <strong>Settings -&gt; Resources -&gt; WSL Integration</strong>
+to click the slider.  In the example below, I have Ubuntu-20.04 enabled.  Then click
+<strong>‘Apply &amp; Restart’</strong> again.</p>
+<a class="reference internal image-reference" href="_images/docker_resources.png"><img alt="A screencap of Docker Desktop resources" src="_images/docker_resources.png" style="width: 600px;" /></a>
+<p>To test, navigate to your WSL 2 distro and enter <code class="code docutils literal notranslate"><span class="pre">docker</span> <span class="pre">info</span></code> at the
+command prompt like before.</p>
+</div>
+</div>
+</div>
+<div class="section" id="other-considerations">
+<h2>Other Considerations<a class="headerlink" href="#other-considerations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="docker-memory-settings">
+<h3>Docker Memory Settings<a class="headerlink" href="#docker-memory-settings" title="Permalink to this headline">¶</a></h3>
+<p>In Docker Desktop, under <strong>Settings -&gt; Resources</strong>, set the memory to at least 6 GB.</p>
+</div>
+<div class="section" id="docker-group-membership">
+<h3>Docker Group Membership<a class="headerlink" href="#docker-group-membership" title="Permalink to this headline">¶</a></h3>
+<p>At the Linux command prompt for your distro, enter the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo usermod -aG docker your-user
+</pre></div>
+</div>
+<p>in which <code class="code docutils literal notranslate"><span class="pre">your-user</span></code> is the username you chose for this Linux distro. Enter
+<code class="code docutils literal notranslate"><span class="pre">groups</span></code> at the command prompt to ensure docker shows up.  See example below:</p>
+<a class="reference internal image-reference" href="_images/docker_group.png"><img alt="A screencap of Docker group membership" src="_images/docker_group.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="disk-drive-space">
+<h3>Disk Drive Space<a class="headerlink" href="#disk-drive-space" title="Permalink to this headline">¶</a></h3>
+<p>On your local disk drive, keep roughly 20-30 GB free for data and programs to
+be used in this project.</p>
+</div>
+<div class="section" id="github-credentials">
+<h3>GitHub Credentials<a class="headerlink" href="#github-credentials" title="Permalink to this headline">¶</a></h3>
+<p>The rest of this guide assumes you are familiar with GitHub and have an account.
+If not, familiarize yourself with the <a class="reference external" href="https://docs.github.com/en/github/getting-started-with-github/signing-up-for-github/signing-up-for-a-new-github-account">GitHub documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/">Windows Subsystem for Linux Documentation</a></li>
+<li><a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/compare-versions">Comparing WSL Versions</a></li>
+<li><a class="reference external" href="https://www.gnu.org/software/bash/manual/html_node/Installing-Bash.html">Installing Bash</a></li>
+<li><a class="reference external" href="https://docs.docker.com/docker-for-windows/install/">Installing Docker Desktop for Windows</a></li>
+<li><a class="reference external" href="https://docs.docker.com/docker-for-windows/wsl/">Docker Desktop WSL 2 Backend</a></li>
+<li><a class="reference external" href="https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly">Docker Desktop WSL 1 Setup Guide</a></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="compose_services_standup.html" class="btn btn-neutral float-right" title="Standing up Gen3 Locally" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Research Triangle Institute
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

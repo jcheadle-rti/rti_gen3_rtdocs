@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Standing up Compose Services in an Azure Cloud Virtual Machine &mdash; RTI Gen3 Deployment 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuring a Working Gen3 Data Commons with Test Data" href="compose_services_working.html" />
+    <link rel="prev" title="Standing up Gen3 Locally" href="compose_services_standup.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RTI Gen3 Deployment
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Prequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_standup.html">Standing up Gen3 Locally</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Standing up Compose Services in an Azure Cloud Virtual Machine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#required-azure-resources">Required Azure Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-and-deploying-an-azure-virtual-machine-through-the-azure-portal">Creating and Deploying an Azure Virtual Machine through the Azure Portal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-azure-vm">Create the Azure VM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-networking">Configure Networking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-google-oauth-client-id-for-fence">Configuring Google OAuth Client ID for Fence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connecting-to-your-vm-through-ssh">Connecting to your VM through SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-compose-services-on-the-vm">Setting up Compose Services on the VM</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_working.html">Configuring a Working Gen3 Data Commons with Test Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_dictionary_prep.html">Preparing the Data Dictionary for a New Schema</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RTI Gen3 Deployment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Standing up Compose Services in an Azure Cloud Virtual Machine</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/cloud_vm_standup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="standing-up-compose-services-in-an-azure-cloud-virtual-machine">
+<span id="cloud-vm-standup"></span><h1>Standing up Compose Services in an Azure Cloud Virtual Machine<a class="headerlink" href="#standing-up-compose-services-in-an-azure-cloud-virtual-machine" title="Permalink to this headline">¶</a></h1>
+<p>This page will walk you through the steps to set up a Microsoft Azure Virtual Machine
+(VM) for the purposes of deploying Gen3 Compose Services in the cloud.  This page
+assumes that the user has or can access the following resources:</p>
+<div class="section" id="required-azure-resources">
+<h2>Required Azure Resources<a class="headerlink" href="#required-azure-resources" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><strong>Virtual Machine</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first">Microsoft Azure subscription</p>
+</li>
+<li><p class="first">Azure Resource Group</p>
+</li>
+<li><p class="first">Azure Virtual Network and Subnet</p>
+</li>
+<li><p class="first">Recommended Configurations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Size: Standard D2s v3</li>
+<li>vCPUs: 2</li>
+<li>RAM: 8 GiB</li>
+<li>OS: Ubuntu Server 18.04 LTS</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Azure Disk (OS HDD)</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Recommended Configuration: 64 GB size (default is 30 GB which is not enough space)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>DNS Name/Record attached to Virtual Machine</strong></p>
+</li>
+<li><p class="first"><strong>Public IP Address (of the Virtual Machine)</strong></p>
+</li>
+</ul>
+</div>
+<div class="section" id="creating-and-deploying-an-azure-virtual-machine-through-the-azure-portal">
+<h2>Creating and Deploying an Azure Virtual Machine through the Azure Portal<a class="headerlink" href="#creating-and-deploying-an-azure-virtual-machine-through-the-azure-portal" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-the-azure-vm">
+<h3>Create the Azure VM<a class="headerlink" href="#create-the-azure-vm" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Log in to <a class="reference external" href="http://portal.azure.com">http://portal.azure.com</a></li>
+<li>Click “Create a Resource”</li>
+<li>Find/Search for “Virtual Machine” and click “Create”</li>
+</ul>
+<a class="reference internal image-reference" href="_images/azure_vm.png"><img alt="Creating a Virtual Machine in Azure" src="_images/azure_vm.png" style="width: 150px;" /></a>
+<ul class="simple">
+<li>Select your Azure subscription and the resource group to be used</li>
+<li>Size dropdown -&gt; select <code class="code docutils literal notranslate"><span class="pre">Standard_D2s_v3</span></code> which is $59.86/month</li>
+</ul>
+<a class="reference internal image-reference" href="_images/standard_disk.png"><img alt="Azure VM: Standard Size" src="_images/standard_disk.png" style="width: 400px;" /></a>
+<ul>
+<li><p class="first">Choose ‘password’ for your authentication type and create a username and password</p>
+</li>
+<li><p class="first">Click ‘Next: Disks’ and then for OS disk type select ‘Standard HDD’</p>
+</li>
+<li><p class="first">Click ‘Next: Networking’</p>
+<blockquote>
+<div><ul class="simple">
+<li>Select your preconfigured Virtual Network and Subnet</li>
+<li>Ensure that no ports are open to the internet</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Click ‘Review and Create’ and validate your configuration, then click ‘create’</p>
+</li>
+</ul>
+</div>
+<div class="section" id="configure-networking">
+<h3>Configure Networking<a class="headerlink" href="#configure-networking" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Choose ‘Networking’ from the left-hand toolbar</p>
+</li>
+<li><p class="first">Add 3 inbound port rules (PORTS 22, 80, 443) for your IP address and anyone else who wants to access the commons.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Source</strong>: IP Addresses</li>
+<li><strong>Source IP</strong>: Enter your IP address and any others for individuals who want to access the commons</li>
+<li><strong>Source port ranges</strong>: *</li>
+<li><strong>Destination</strong>: Any</li>
+<li><strong>Action</strong>: Allow</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Choose ‘Overview’ from the left-hand toolbar</p>
+<blockquote>
+<div><ul class="simple">
+<li>In the top section you will see ‘DNS name: Not configured’</li>
+<li>Click on ‘Not Configured’ and then create a DNS name (Azure will default to *.eastus.cloudapp.azure.com)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="configuring-google-oauth-client-id-for-fence">
+<h2>Configuring Google OAuth Client ID for Fence<a class="headerlink" href="#configuring-google-oauth-client-id-for-fence" title="Permalink to this headline">¶</a></h2>
+<p>Note that in a previous page of this guide (<a class="reference internal" href="compose_services_standup.html#setting-up-google-oauth-client-id-for-fence"><span class="std std-ref">Setting up Google OAuth Client ID for Fence</span></a>) we walked through how to configure
+Google OAuth for Fence.  On a cloud VM it is similar, except you will replace
+<code class="code docutils literal notranslate"><span class="pre">localhost</span></code> with your VM DNS name.</p>
+<a class="reference internal image-reference" href="_images/google_oauth.png"><img alt="Google OAuth Dialogue Box" src="_images/google_oauth.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="connecting-to-your-vm-through-ssh">
+<h2>Connecting to your VM through SSH<a class="headerlink" href="#connecting-to-your-vm-through-ssh" title="Permalink to this headline">¶</a></h2>
+<p>This guide recommends using Microsft VS Code Remote Explorer to connect to the VM
+that you created.  You will be connecting via SSH (Secure Shell).</p>
+<ul class="simple">
+<li>Open VS Code and install the Remote Explorer extension if not installed</li>
+<li>Open the Remote Explorer Extension along the left-hand pane</li>
+</ul>
+<a class="reference internal image-reference" href="_images/remote_explorer.png"><img alt="Remote Explorer icon" src="_images/remote_explorer.png" style="width: 100px;" /></a>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Add a new configuration for your VM’s public IP address:</dt>
+<dd><ul class="first last">
+<li>Host &lt;your VM’s public IP address&gt;</li>
+<li>HostName &lt;your VM’s public IP address&gt;</li>
+<li>User &lt;your username from previous step&gt;</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Connect to your VM by right-clicking the new connection and selecting either of the options (Note: you may need to click the refresh button to see new configurations that you’ve created)</li>
+</ul>
+</div>
+<div class="section" id="setting-up-compose-services-on-the-vm">
+<h2>Setting up Compose Services on the VM<a class="headerlink" href="#setting-up-compose-services-on-the-vm" title="Permalink to this headline">¶</a></h2>
+<p>The steps in this section will go over how to set up Gen3 Compose Services now that you
+have access to your newly-created VM.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Install Docker and Docker Compose</dt>
+<dd><ul class="first last">
+<li>Follow <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/#installation-methods">this guide</a> for Ubuntu.  It is recommended that you use the ‘install using the repository’ method.</li>
+<li>Follow <a class="reference external" href="https://docs.docker.com/compose/install/#install-compose-on-linux-systems">this guide</a> for Docker-Compose help.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Create a new directory to work in using the terminal or file explorer</li>
+<li>Open a terminal and route to your new directory (Terminal -&gt; New Terminal in VS Code Toolbar)</li>
+<li>Run the following code to clone <code class="code docutils literal notranslate"><span class="pre">compose-services</span></code> and set up your credentials using the DNS name attached to your VM</li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/uc-cdis/compose-services.git
+<span class="nb">cd</span> compose-services
+bash creds_setup.sh YOUR_CUSTOM_DOMAIN <span class="c1"># Use the DNS set up in the previous steps</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Configure <code class="code docutils literal notranslate"><span class="pre">fence.yaml</span></code> using steps from <a class="reference internal" href="compose_services_standup.html#configure-fence-config-yaml"><span class="std std-ref">Configure fence-config.yaml</span></a></li>
+<li>Refer to <a class="reference internal" href="compose_services_standup.html#starting-up-your-local-gen3-compose-services-deployment"><span class="std std-ref">Starting up your Local Gen3 compose-services Deployment</span></a> to start the commons</li>
+<li>Finally, go to your Data Commons at your registered DNS name.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="compose_services_working.html" class="btn btn-neutral float-right" title="Configuring a Working Gen3 Data Commons with Test Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="compose_services_standup.html" class="btn btn-neutral float-left" title="Standing up Gen3 Locally" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Research Triangle Institute
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

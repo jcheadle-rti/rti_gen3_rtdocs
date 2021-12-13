@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Preparing the Data Dictionary for a New Schema &mdash; RTI Gen3 Deployment 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Configuring a Working Gen3 Data Commons with Test Data" href="compose_services_working.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> RTI Gen3 Deployment
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Prequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_standup.html">Standing up Gen3 Locally</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud_vm_standup.html">Standing up Compose Services in an Azure Cloud Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compose_services_working.html">Configuring a Working Gen3 Data Commons with Test Data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Preparing the Data Dictionary for a New Schema</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-old-test-data">Deleting Old Test Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#validating-existing-dictionary-schema">Validating Existing Dictionary Schema</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-dictionaryutils-aliases">Setting up the dictionaryutils Aliases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validate-the-default-dictionary-schema">Validate the Default Dictionary Schema</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#schema-tests">Schema Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-note-on-schemas">A Note on Schemas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-required-properties-test-required-project-property">test_required_properties.test_required_project_property</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-schema-rules-test-no-mixed-type-in-enum">test_schema_rules.test_no_mixed_type_in_enum</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#making-changes-to-the-data-dictionary">Making Changes to the Data Dictionary</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">RTI Gen3 Deployment</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Preparing the Data Dictionary for a New Schema</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/data_dictionary_prep.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="preparing-the-data-dictionary-for-a-new-schema">
+<span id="data-dictionary-prep"></span><h1>Preparing the Data Dictionary for a New Schema<a class="headerlink" href="#preparing-the-data-dictionary-for-a-new-schema" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="deleting-old-test-data">
+<h2>Deleting Old Test Data<a class="headerlink" href="#deleting-old-test-data" title="Permalink to this headline">¶</a></h2>
+<p>If you have any old test data, it will useful to delete it.  To do this, following
+the <a class="reference external" href="https://github.com/uc-cdis/compose-services/blob/master/docs/using_the_commons.md#persistent-store">GitHub guide</a>.,
+enter the following while your stack is down:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker volume rm compose-services_esdata
+docker volume rm compose-services_psqldata
+</pre></div>
+</div>
+<p>Double check that in the Postgres database there is no data in, for example, the
+project node:</p>
+<a class="reference internal image-reference" href="_images/empty_postgres.png"><img alt="The project node showing no data, as expected." src="_images/empty_postgres.png" style="width: 400px;" /></a>
+</div>
+<div class="section" id="validating-existing-dictionary-schema">
+<h2>Validating Existing Dictionary Schema<a class="headerlink" href="#validating-existing-dictionary-schema" title="Permalink to this headline">¶</a></h2>
+<p>Gen3 has a <a class="reference external" href="https://github.com/uc-cdis/dictionaryutils">repository</a> for validating
+the Gen3 data dictionaries using JSON Schema.  It can be useful to get this
+installed and ready to use for if and when you create your own custom data dictionary.</p>
+<div class="section" id="setting-up-the-dictionaryutils-aliases">
+<h3>Setting up the dictionaryutils Aliases<a class="headerlink" href="#setting-up-the-dictionaryutils-aliases" title="Permalink to this headline">¶</a></h3>
+<p>Per the instructions in the GitHub repository, you can make an alias that runs a
+<code class="code docutils literal notranslate"><span class="pre">dictionaryutils</span></code> docker container.  This alias is typically stored in a file
+called your ‘.bash_profile.  First, check to see if you have a file called ‘.bash_profile’ at your home repo:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~
+ls -lah
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/home.png"><img alt="list of files in the home directory." src="_images/home.png" style="width: 600px;" /></a>
+<p>If you don’t see ‘.bash_profile’, you can easily create one by typing <code class="code docutils literal notranslate"><span class="pre">touch</span> <span class="pre">~/.bash_profile</span></code>
+in the terminal.  To edit the ‘.bash_profile’ file, type <code class="code docutils literal notranslate"><span class="pre">nano</span> <span class="pre">~/.bash_profile</span></code> at the terminal.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The example function provided in the GitHub repo, <code class="code docutils literal notranslate"><span class="pre">testdict()</span></code>,
+did not work for me.  I suspect it had something to do with my using WSL.
+Thus, I created a second function called <code class="code docutils literal notranslate"><span class="pre">testdictwsl()</span></code> which overrides the
+default command of the Dockerfile and substitutes one that seems to work on WSL.
+I recommend putting both of these in your bash_profile and running whichever
+one happens to work.</p>
+</div>
+<p>Copy and paste the following code into the file.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># if running bash - this ensures your .bashrc will be loaded</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$BASH_VERSION</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># include .bashrc if it exists</span>
+    <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.bashrc&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        . <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.bashrc&quot;</span>
+    <span class="k">fi</span>
+<span class="k">fi</span>
+
+<span class="c1"># Gen3 Dictionary Validator Aliases</span>
+testdict<span class="o">()</span> <span class="o">{</span> docker run --rm -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/dictionary quay.io/cdis/dictionaryutils:master<span class="p">;</span> <span class="o">}</span>
+testdictwsl<span class="o">()</span> <span class="o">{</span> docker run --rm -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/dictionary quay.io/cdis/dictionaryutils:master /bin/sh -c
+<span class="s2">&quot;cd /dictionary; rm -rf build dictionaryutils dist gdcdictionary.egg-info;</span>
+<span class="s2">python setup.py install --force &amp;&amp; cp -r /dictionaryutils . &amp;&amp; cd /dictionary/dictionaryutils;</span>
+<span class="s2">pip uninstall gen3dictionary; nosetests / -s -v; export SUCCESS=</span><span class="nv">$?</span><span class="s2">; cd ..;</span>
+<span class="s2">rm -rf build dictionaryutils dist gdcdictionary.egg-info; exit </span><span class="nv">$SUCCESS</span><span class="s2">&quot;</span><span class="p">;</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>After saving and exiting, source your bash profile with <code class="code docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.bash_profile</span></code>.</p>
+</div>
+<div class="section" id="validate-the-default-dictionary-schema">
+<h3>Validate the Default Dictionary Schema<a class="headerlink" href="#validate-the-default-dictionary-schema" title="Permalink to this headline">¶</a></h3>
+<p>To validate the default dictionary, move from the compose-services root to the
+<code class="code docutils literal notranslate"><span class="pre">/datadictionary</span></code> subfolder.  Source and run <code class="code docutils literal notranslate"><span class="pre">testdict</span></code> or <code class="code docutils literal notranslate"><span class="pre">testdictwsl</span></code>,
+depending on your system.  See code below:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> datadictionary
+testdictwsl
+</pre></div>
+</div>
+<p>The first time you run this, your machine may need to download the image from DockerHub.
+This will take several minutes.  After the image is installed and run, you should
+see a long list of tests, with 23 passed tests.  It should look something like the log below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>test_invalid_files (dictionaryutils.schema_test.SchemaTest) ... ok
+test_schemas (dictionaryutils.schema_test.SchemaTest) ... ok
+test_valid_files (dictionaryutils.schema_test.SchemaTest) ... ok
+test_datamodel.test_datamodel ... ok
+test_required_fields.test_required_nodes ... ok
+test_required_fields.test_required_data_fields ... ok
+test_required_fields.test_required_project_fields ... ok
+test_required_fields.test_required_program_fields ... ok
+test_required_fields.test_required_ubiquitous_fields ... ok
+test_required_fields.test_id_matches ... ok
+When a property is of type &quot;enum&quot;, the &quot;type&quot; field should not ... ok
+test_required_fields.test_arrays_have_items ... ok
+If a property is not required, `null` type is automatically ... ok
+test_required_links.test_require_core_metadata_collections ... ok
+test_required_links.test_required_fields_in_links ... ok
+test_required_properties.test_required_program_property ... ok
+test_required_properties.test_required_project_property ... ok
+test_required_properties.test_required_ubiquitous_properties ... ok
+test_required_properties.test_required_internal_properties ... ok
+test_schema_rules.test_no_mixed_type_in_enum ... ok
+test_schema_rules.test_lowercase_ids ... ok
+test_schema_rules.test_nodeid_length ... ok
+test_simulate_data.test ...
+Validating schemas against metaschema...
+Validating &#39;Data Release&#39;
+Validating &#39;Root&#39;
+Validating &#39;Aliquot&#39;
+Validating &#39;Read Group QC&#39;
+Validating &#39;Family History&#39;
+Validating &#39;Clinical Test&#39;
+Validating &#39;Publication&#39;
+Validating &#39;Submitted Somatic Mutation&#39;
+Validating &#39;Core Metadata Collection&#39;
+Validating &#39;Keyword&#39;
+Validating &#39;Slide&#39;
+Validating &#39;Sample&#39;
+Validating &#39;Case&#39;
+Validating &#39;Read Group&#39;
+Validating &#39;Submitted Aligned Reads&#39;
+Validating &#39;Demographic&#39;
+Validating &#39;Aligned Reads Index&#39;
+Validating &#39;Diagnosis&#39;
+Validating &#39;Treatment&#39;
+Validating &#39;Experimental Metadata&#39;
+Validating &#39;Submitted Methylation&#39;
+Validating &#39;Exposure&#39;
+Validating &#39;Program&#39;
+Validating &#39;Submitted Copy Number&#39;
+Validating &#39;Slide Image&#39;
+Validating &#39;Slide Count&#39;
+Validating &#39;Submitted Unaligned Reads&#39;
+Validating &#39;Acknowledgement&#39;
+Validating &#39;Experiment&#39;
+Validating &#39;Project&#39;
+ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 3.549s
+
+OK
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="schema-tests">
+<h2>Schema Tests<a class="headerlink" href="#schema-tests" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a-note-on-schemas">
+<h3>A Note on Schemas<a class="headerlink" href="#a-note-on-schemas" title="Permalink to this headline">¶</a></h3>
+<p>The schemas are what drive the data dictionary.  They are located in <code class="code docutils literal notranslate"><span class="pre">./datadictionary/gdcdictionary/schemas</span></code>.
+They follow JSON Schema convention.  More information can be found in the following repo: <a class="reference external" href="https://github.com/NCI-GDC/gdcdatamodel">https://github.com/NCI-GDC/gdcdatamodel</a></p>
+<p>Before making changes to the data dictionary (<code class="code docutils literal notranslate"><span class="pre">gdcdictionary</span></code>),
+<strong>you’ll want to copy your old one and rename it</strong> as something else, e.g.
+‘gdcdictionary_old’ or ‘gdcdictionary_copy’  Feel free to do this in a program
+like VS Code (I do most of the programming in VS Code) or just simply in your
+file explorer, or on Linux is fine.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There appears to be a quirk with Gen3 where the dictionary <strong>MUST</strong> be named
+<code class="code docutils literal notranslate"><span class="pre">gdcdictionary</span></code>.  So, just don’t rename it.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you mess up, you can always move back to your repo root and run
+<code class="code docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--HEAD</span></code>, which will pull down the current version to
+replace your local version.  This won’t affect anything in your <code class="code docutils literal notranslate"><span class="pre">/Secrets</span></code>
+folder, as this is ignored by git via the .gitignore file.</p>
+</div>
+<p>To test the validator, we are going to make changes to the data dictionary that are in violation of the tests.
+The tests can be found in the dictionaryutils GitHub repo mentioned above, specifically
+at <a class="reference external" href="https://github.com/uc-cdis/dictionaryutils/tree/master/tests">this link</a>.</p>
+</div>
+<div class="section" id="test-required-properties-test-required-project-property">
+<h3>test_required_properties.test_required_project_property<a class="headerlink" href="#test-required-properties-test-required-project-property" title="Permalink to this headline">¶</a></h3>
+<p>Comment out portions of the <strong>project.yaml</strong> file to violate the required property test.
+Specifically, comment out anything having to do with <code class="code docutils literal notranslate"><span class="pre">dbgap_accession_number</span></code>, which is a required property.</p>
+<a class="reference internal image-reference" href="_images/project_top.png"><img alt="commenting out a portion of the project schema to intentionally fail a test." src="_images/project_top.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/project_bottom.png"><img alt="commenting out a portion of the project schema to intentionally fail a test." src="_images/project_bottom.png" style="width: 600px;" /></a>
+<p><strong>Running the test should yield 2 failures</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">======================================================================</span>
+<span class="n">FAIL</span><span class="p">:</span> <span class="n">test_required_fields</span><span class="o">.</span><span class="n">test_required_project_fields</span>
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="n">File</span> <span class="s2">&quot;/usr/local/lib/python3.6/site-packages/nose/case.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">198</span><span class="p">,</span> <span class="ow">in</span> <span class="n">runTest</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
+<span class="n">File</span> <span class="s2">&quot;/src/tests/test_required_fields.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">52</span><span class="p">,</span> <span class="ow">in</span> <span class="n">test_required_project_fields</span>
+    <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">],</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is required for project&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+<span class="ne">AssertionError</span><span class="p">:</span> <span class="n">dbgap_accession_number</span> <span class="ow">is</span> <span class="n">required</span> <span class="k">for</span> <span class="n">project</span>
+
+<span class="o">======================================================================</span>
+<span class="n">FAIL</span><span class="p">:</span> <span class="n">test_required_properties</span><span class="o">.</span><span class="n">test_required_project_property</span>
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="n">File</span> <span class="s2">&quot;/usr/local/lib/python3.6/site-packages/nose/case.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">198</span><span class="p">,</span> <span class="ow">in</span> <span class="n">runTest</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
+<span class="n">File</span> <span class="s2">&quot;/src/tests/test_required_properties.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">20</span><span class="p">,</span> <span class="ow">in</span> <span class="n">test_required_project_property</span>
+    <span class="s2">&quot;as required&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">required</span><span class="p">)</span>
+<span class="ne">AssertionError</span><span class="p">:</span> <span class="n">dbgap_accession_number</span> <span class="ow">is</span> <span class="n">required</span> <span class="nb">property</span> <span class="k">for</span> <span class="n">a</span> <span class="n">project</span> <span class="n">node</span><span class="p">,</span> <span class="n">but</span> <span class="ow">not</span> <span class="n">defined</span> <span class="k">as</span> <span class="n">required</span>
+
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Ran</span> <span class="mi">23</span> <span class="n">tests</span> <span class="ow">in</span> <span class="mf">4.104</span><span class="n">s</span>
+
+<span class="n">FAILED</span> <span class="p">(</span><span class="n">failures</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Uncomment the <strong>project.yaml</strong> file and run the test again.  You should see everything pass.</p>
+</div>
+<div class="section" id="test-schema-rules-test-no-mixed-type-in-enum">
+<h3>test_schema_rules.test_no_mixed_type_in_enum<a class="headerlink" href="#test-schema-rules-test-no-mixed-type-in-enum" title="Permalink to this headline">¶</a></h3>
+<p>Find a schema with an enum (enumeration) data type.  I chose <strong>diagnosis.yaml</strong>.
+Under properties, add values that do not share the data type of the enums -
+for instance, I added an integer and a NULL/None type to this enum.</p>
+<a class="reference internal image-reference" href="_images/diagnosis.png"><img alt="commenting out a portion of the diagnosis schema to intentionally fail a test." src="_images/diagnosis.png" style="width: 400px;" /></a>
+<p><strong>Running the test should yield 2 failures</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2021</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">28</span> <span class="mi">23</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">00</span><span class="p">,</span><span class="mi">167</span><span class="p">][</span><span class="n">data</span><span class="o">-</span><span class="n">simulator</span> <span class="n">simulate</span><span class="p">][</span>  <span class="n">ERROR</span><span class="p">]</span> <span class="n">Error</span><span class="p">:</span> <span class="n">ajcc_clinical_m</span> <span class="n">has</span> <span class="n">mixed</span> <span class="n">datatype</span><span class="o">.</span> <span class="n">Detail</span> <span class="p">[</span><span class="s1">&#39;M0&#39;</span><span class="p">,</span> <span class="s1">&#39;M1&#39;</span><span class="p">,</span> <span class="s1">&#39;M1a&#39;</span><span class="p">,</span> <span class="s1">&#39;M1b&#39;</span><span class="p">,</span> <span class="s1">&#39;M1c&#39;</span><span class="p">,</span> <span class="s1">&#39;MX&#39;</span><span class="p">,</span> <span class="s1">&#39;cM0 (i+)&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown&#39;</span><span class="p">,</span> <span class="s1">&#39;Not Reported&#39;</span><span class="p">,</span> <span class="s1">&#39;Not Allowed To Collect&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">FAIL</span>
+
+<span class="o">======================================================================</span>
+<span class="n">FAIL</span><span class="p">:</span> <span class="n">test_schema_rules</span><span class="o">.</span><span class="n">test_no_mixed_type_in_enum</span>
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="n">File</span> <span class="s2">&quot;/usr/local/lib/python3.6/site-packages/nose/case.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">198</span><span class="p">,</span> <span class="ow">in</span> <span class="n">runTest</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
+<span class="n">File</span> <span class="s2">&quot;/src/tests/test_schema_rules.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">20</span><span class="p">,</span> <span class="ow">in</span> <span class="n">test_no_mixed_type_in_enum</span>
+    <span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: enum values should all be string&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schema</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+<span class="ne">AssertionError</span><span class="p">:</span> <span class="n">diagnosis</span><span class="p">:</span> <span class="n">enum</span> <span class="n">values</span> <span class="n">should</span> <span class="nb">all</span> <span class="n">be</span> <span class="n">string</span>
+
+<span class="o">======================================================================</span>
+<span class="n">FAIL</span><span class="p">:</span> <span class="n">test_simulate_data</span><span class="o">.</span><span class="n">test</span>
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="n">File</span> <span class="s2">&quot;/usr/local/lib/python3.6/site-packages/nose/case.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">198</span><span class="p">,</span> <span class="ow">in</span> <span class="n">runTest</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
+<span class="n">File</span> <span class="s2">&quot;/src/tests/test_simulate_data.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span> <span class="n">test</span>
+    <span class="k">assert</span> <span class="n">graph</span><span class="o">.</span><span class="n">graph_validation</span><span class="p">()</span>
+<span class="ne">AssertionError</span>
+
+<span class="o">----------------------------------------------------------------------</span>
+<span class="n">Ran</span> <span class="mi">23</span> <span class="n">tests</span> <span class="ow">in</span> <span class="mf">3.877</span><span class="n">s</span>
+
+<span class="n">FAILED</span> <span class="p">(</span><span class="n">failures</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Reverse the changes, save, re-run the tests, and ensure the tests pass.</p>
+</div>
+</div>
+<div class="section" id="making-changes-to-the-data-dictionary">
+<h2>Making Changes to the Data Dictionary<a class="headerlink" href="#making-changes-to-the-data-dictionary" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have established that the automated tests respond to the data dictionary
+structure, you may begin making changes to the data dictionary.  See
+<a class="reference external" href="https://github.com/uc-cdis/compose-services/blob/master/docs/using_the_commons.md#changing-the-data-dictionary">this link</a>
+for tips on how to edit the data dictionary.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="compose_services_working.html" class="btn btn-neutral float-left" title="Configuring a Working Gen3 Data Commons with Test Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Research Triangle Institute
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
