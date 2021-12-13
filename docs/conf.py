@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'RTI Gen3 Deployment'
-copyright = '2021, John Cheadle'
+copyright = '2021, Research Triangle Institute'
 author = 'John Cheadle'
 
 # The version info for the project you're documenting, acts as replacement for
